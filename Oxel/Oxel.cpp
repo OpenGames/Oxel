@@ -105,7 +105,7 @@ namespace OpenGames::Oxel
 			*/
 			glEnable(GL_DEPTH_TEST);
 
-			renderer.program = Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag"));
+			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
 			Render::Models::Quad* object = new Render::Models::Quad();
 			renderer.gameModels.pushBack(object);
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());

@@ -5,8 +5,8 @@ namespace OpenGames::Oxel::Render
 {
 	class Renderer
 	{
-	public:
 		GLuint program;
+	public:
 		GLuint modelMatrixLocation, viewMatrixLocation, projectionMatrixLocation;
 		Math::Array<Models::Model*> gameModels;
 		~Renderer()
