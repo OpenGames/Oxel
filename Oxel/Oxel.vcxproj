@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Oxel.cpp" />
     <ClCompile Include="Quad.cpp" />

@@ -5,7 +5,7 @@ namespace OpenGames::Oxel::Render::Models
 	class Quad : public Model
 	{
 	public:
-		Quad()
+		Quad(glm::vec3 position) : Model(position)
 		{
 			GLuint vao, vbo;
 

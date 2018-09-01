@@ -22,6 +22,9 @@
     <Filter Include="Исходные файлы\Math">
       <UniqueIdentifier>{f321dfbf-7db7-412c-abfa-8ee8ee0ea4ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Render\World">
+      <UniqueIdentifier>{a2752c92-adf7-4e6a-977e-e6b696249d1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Исходные файлы\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Исходные файлы\Render\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

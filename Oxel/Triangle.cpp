@@ -5,7 +5,7 @@ namespace OpenGames::Oxel::Render::Models
 	class Triangle : public Model
 	{
 	public:
-		Triangle()
+		Triangle(glm::vec3 position) : Model(position)
 		{
 			GLuint vao, vbo;
 
