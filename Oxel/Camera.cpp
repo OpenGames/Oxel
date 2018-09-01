@@ -10,10 +10,10 @@ namespace OpenGames::Oxel::Render
 	private:
 		float aspectRatio;
 	public:
-		glm::vec3 position = glm::vec3(1.0f, 1.0f, 1.0f);// -0.418867
+		glm::vec3 position = glm::vec3(0.0f, 0.0f, -2.0f);// -0.418867
 		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, 0.0f);
-		float angleFromX = 1.97126f;
-		float angleFromY = -0.418867f;
+		float angleFromX = 7.86158f;
+		float angleFromY = .0f;
 		float sensivity = 1.0f;
 		float fov = 90.0f;
 

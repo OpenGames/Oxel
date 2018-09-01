@@ -29,6 +29,7 @@ namespace OpenGames::Oxel::Render::Models
 
 			glEnableVertexAttribArray(0);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
+
 			glEnableVertexAttribArray(1);
 			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 9, reinterpret_cast<void*>(sizeof(GLfloat) * 9));
 

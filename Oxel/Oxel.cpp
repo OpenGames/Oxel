@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Triangle.cpp"
+#include "Quad.cpp"
 #include "Renderer.cpp"
 #include "Camera.cpp"
 #include "ShaderLoader.cpp"
@@ -106,7 +107,7 @@ namespace OpenGames::Oxel
 			glEnable(GL_DEPTH_TEST);
 
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
-			Render::Models::Triangle* object = new Render::Models::Triangle();
+			Render::Models::Quad* object = new Render::Models::Quad();
 			renderer.gameModels.pushBack(object);
 
 			renderer.setCamera(&camera);

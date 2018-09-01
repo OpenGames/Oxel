@@ -12,22 +12,24 @@ namespace OpenGames::Oxel::Render::Models
 			glGenVertexArrays(1, &vao);
 			glBindVertexArray(vao);
 
-			static const GLfloat vertices[20] = {
+			static const GLfloat vertices[14] = {
 				//Position
 				-1.00f,-1.00f, 0.00f,
 				-1.00f, 1.00f, 0.00f,
 				 1.00f,-1.00f, 0.00f,
 				 1.00f, 1.00f, 0.00f,
 				//UVs
-				0.0f,1.0f,
-				0.0f,0.0f,
-				1.0f,1.0f,
-				1.0f,0.0f
+				 1.0f, 1.0f,
+				 1.0f, 1.0f,
+				 1.0f, 1.0f,
+				 1.0f, 1.0f
+
+				 //14 --> 20
 			};
 
 			glGenBuffers(1, &vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
 			glEnableVertexAttribArray(0);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
@@ -42,7 +44,7 @@ namespace OpenGames::Oxel::Render::Models
 		virtual void draw() override final
 		{
 			glBindVertexArray(vao);
-			glDrawArrays(GL_LINES, 0, 4);
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		}
 	};
 }
