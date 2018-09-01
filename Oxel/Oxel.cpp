@@ -2,7 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Quad.cpp"
+#include "Triangle.cpp"
 #include "Renderer.cpp"
 #include "Camera.cpp"
 #include "ShaderLoader.cpp"
@@ -106,8 +106,10 @@ namespace OpenGames::Oxel
 			glEnable(GL_DEPTH_TEST);
 
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
-			Render::Models::Quad* object = new Render::Models::Quad();
+			Render::Models::Triangle* object = new Render::Models::Triangle();
 			renderer.gameModels.pushBack(object);
+
+			renderer.setCamera(&camera);
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
 		}
@@ -117,12 +119,15 @@ namespace OpenGames::Oxel
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			renderer.render();
 
+
+
 			glfwSwapBuffers(window);
 		}
 		void update()
 		{
 			keyHandler();
-			std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << std::endl;
+			std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.angleFromX << "\t" << camera.angleFromY << std::endl;
+			//std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.orientation.x << "\t" << camera.orientation.y << "\t" << camera.orientation.z << "\t" << std::endl;
 		}
 		inline int windowShouldClose() { return glfwWindowShouldClose(window); }
 	};

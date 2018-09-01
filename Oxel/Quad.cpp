@@ -42,7 +42,7 @@ namespace OpenGames::Oxel::Render::Models
 		virtual void draw() override final
 		{
 			glBindVertexArray(vao);
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			glDrawArrays(GL_LINES, 0, 4);
 		}
 	};
 }
