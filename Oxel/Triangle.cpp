@@ -14,12 +14,12 @@ namespace OpenGames::Oxel::Render::Models
 
 			static const GLfloat vertices[15] = {
 				//Position
-				-1.00f,-1.00f, 0.00f,
-				-1.00f, 1.00f, 0.00f,
-				 1.00f, 1.00f, 0.00f,
+				0.00f, 0.00f, 0.00f,
+				0.00f, 1.00f, 0.00f,
+				1.00f, 1.00f, 0.00f,
 				 //UVs
+				 1.0f,0.0f,
 				 0.0f,1.0f,
-				 0.0f,0.0f,
 				 1.0f,1.0f
 			};
 
@@ -31,7 +31,7 @@ namespace OpenGames::Oxel::Render::Models
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
 
 			glEnableVertexAttribArray(1);
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 9, reinterpret_cast<void*>(sizeof(GLfloat) * 9));
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(sizeof(GLfloat) * 9));
 
 			glBindVertexArray(0);
 

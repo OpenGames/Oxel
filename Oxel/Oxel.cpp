@@ -107,10 +107,11 @@ namespace OpenGames::Oxel
 			glEnable(GL_DEPTH_TEST);
 
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
+			renderer.setCamera(&camera);
+
 			Render::Models::Quad* object = new Render::Models::Quad();
 			renderer.gameModels.pushBack(object);
 
-			renderer.setCamera(&camera);
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
 		}
@@ -118,9 +119,8 @@ namespace OpenGames::Oxel
 		{
 			glfwPollEvents();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			
 			renderer.render();
-
-
 
 			glfwSwapBuffers(window);
 		}

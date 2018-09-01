@@ -10,7 +10,6 @@ namespace OpenGames::Oxel::Render
 		GLuint program;
 	public:
 		GLuint modelMatrixLocation, viewMatrixLocation, projectionMatrixLocation;
-		GLuint SomePosLoc;
 		Render::Camera3D* camera;
 		Math::Array<Models::Model*> gameModels;
 		~Renderer()
@@ -29,7 +28,6 @@ namespace OpenGames::Oxel::Render
 			program = shaderProgram;
 			glUseProgram(program);
 			modelMatrixLocation = glGetUniformLocation(shaderProgram, "model");
-			SomePosLoc = glGetUniformLocation(shaderProgram, "SomePos");
 			viewMatrixLocation = glGetUniformLocation(shaderProgram, "view");
 			projectionMatrixLocation = glGetUniformLocation(shaderProgram, "projection");
 		}
@@ -41,7 +39,6 @@ namespace OpenGames::Oxel::Render
 				glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, camera->getProjectionMatrixPointer());
 				glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, camera->getViewMatrixPointer());
 				glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, gameModels[i]->getModelMatrixPointer());
-				glUniform2f(SomePosLoc, camera->getSomePos().x, camera->getSomePos().y);
 
 				//std::cout << "LEL" << SomePosLoc;
 
