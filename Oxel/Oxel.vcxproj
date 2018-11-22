@@ -129,6 +129,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="ContentPipe.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Oxel.cpp" />
     <ClCompile Include="Quad.cpp" />

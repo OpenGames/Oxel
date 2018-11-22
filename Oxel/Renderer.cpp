@@ -49,9 +49,54 @@ namespace OpenGames::Oxel::Render
 				glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, camera->getViewMatrixPointer());
 				for (size_t j = 0; j < gameDModels[i]->size(); j++)
 				{
-					glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
-
-					gameDModels[i]->draw(j);
+					if (j == 0)
+					{
+						if (camera->position.x  < gameDModels[i]->getPosition().x - 0.5)
+						{
+							glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+							gameDModels[i]->draw(j);
+						}
+					}
+					if (j == 1)
+					{
+						if (camera->position.x  > gameDModels[i]->getPosition().x + 0.5)
+						{
+							glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+							gameDModels[i]->draw(j);
+						}
+					}
+					if (j == 2)
+					{
+						if (camera->position.y  < gameDModels[i]->getPosition().y - 0.5)
+						{
+							glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+							gameDModels[i]->draw(j);
+						}
+					}
+					if (j == 3)
+					{
+						if (camera->position.y > gameDModels[i]->getPosition().y + 0.5)
+						{
+							glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+							gameDModels[i]->draw(j);
+						}
+					}
+					if (j == 4)
+					{
+						if (camera->position.z  < gameDModels[i]->getPosition().z - 0.5)
+						{
+							glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+							gameDModels[i]->draw(j);
+						}
+					}
+					if (j == 5)
+					{
+						if (camera->position.z  > gameDModels[i]->getPosition().z + 0.5)
+						{
+							glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+							gameDModels[i]->draw(j);
+						}
+					}
 				}
 				
 			}

@@ -24,7 +24,7 @@ namespace OpenGames::Oxel::Render
 		inline void addRotation(float yaw, float pitch)
 		{
 			angleFromX += pitch * PI * sensivity;
-			if(angleFromY + yaw * PI * sensivity <= PI / 2 && angleFromY + yaw * PI * sensivity >= -PI / 2)
+			if(angleFromY + yaw * PI * sensivity < PI / 2 && angleFromY + yaw * PI * sensivity > -PI / 2)
 				angleFromY += yaw * PI * sensivity;
 			float radiusFromY = cos(angleFromY);
 			orientation.x = cos(angleFromX) * radiusFromY;

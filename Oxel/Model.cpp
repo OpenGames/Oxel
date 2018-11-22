@@ -13,6 +13,7 @@ namespace OpenGames::Oxel::Render::Models
 	{
 	protected:
 		GLuint vao;
+		GLuint texture;
 		Math::Array<GLuint> vbo;
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::quat model_orientation_quaternion;
@@ -35,6 +36,10 @@ namespace OpenGames::Oxel::Render::Models
 		}
 		virtual void draw() {}
 
+		void setTexture(GLuint texture)
+		{
+			this->texture = texture;
+		}
 		virtual void addRotation(float ang, glm::vec3 axis)
 		{
 			model_orientation_quaternion = model_orientation_quaternion * glm::angleAxis(ang, axis);
@@ -107,8 +112,13 @@ namespace OpenGames::Oxel::Render::Models
 	{
 	protected:
 		Math::Array<Model*> models;
+		glm::vec3 position;
 
 	public:
+		virtual glm::vec3 getPosition()
+		{
+			return position;
+		}
 		virtual inline void addModel(Model* m)
 		{
 			models.pushBack(m);

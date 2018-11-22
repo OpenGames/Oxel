@@ -66,6 +66,9 @@
     <ClCompile Include="Block.cpp">
       <Filter>Исходные файлы\Render\Models\Derives</Filter>
     </ClCompile>
+    <ClCompile Include="ContentPipe.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core.frag">

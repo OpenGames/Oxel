@@ -2,6 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "ContentPipe.cpp"
 #include "Triangle.cpp"
 #include "Quad.cpp"
 #include "Renderer.cpp"
@@ -134,23 +135,45 @@ namespace OpenGames::Oxel
 
 			//renderer.gameModels.pushBack(q1);
 			//renderer.gameModels.pushBack(q2);
-			renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }));
+
+			GLuint missing = ContentPipe::loadTexture("missing.png", GL_NEAREST);
+
+			Math::Array<Render::Models::Block* > chunk;
+			for (float x = 0; x < 16; x++)
+			{
+				for (float y = 0; y < 16; y++)
+				{
+					for (float z = 0; z < 16; z++)
+					{
+						renderer.gameDModels.pushBack(new Render::Models::Block({ x,y,z }, missing));
+					}
+				}
+			}
+
+			//renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }, missing));
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
 		}
 		void render()
 		{
+			double time = glfwGetTime();
+
 			glfwPollEvents();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
 			renderer.render();
 
 			glfwSwapBuffers(window);
+
+			double fps = 1.0 / (glfwGetTime() - time);
+			time = glfwGetTime();
+			glfwSetWindowTitle(window, (std::to_string(fps) + " lul").c_str());
 		}
 		void update()
 		{
 			keyHandler();
+			//glfwSetWindowTitle(window, "u r a faggot");
 			std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.angleFromX << "\t" << camera.angleFromY << std::endl;
 			//std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.orientation.x << "\t" << camera.orientation.y << "\t" << camera.orientation.z << "\t" << std::endl;
 		}

@@ -1,5 +1,6 @@
 #pragma once
 #include "Model.cpp"
+#include "ContentPipe.cpp"
 namespace OpenGames::Oxel::Render::Models
 {
 	class Quad : public Model
@@ -41,10 +42,13 @@ namespace OpenGames::Oxel::Render::Models
 			this->vao = vao;
 			this->vbo.pushBack(vbo);
 		}
+
 		virtual void draw() override final
 		{
+			ContentPipe::bindTexture(texture, 0);
 			glBindVertexArray(vao);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			ContentPipe::unbindTexture(0);
 		}
 	};
 }
