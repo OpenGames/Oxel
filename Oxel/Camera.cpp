@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#define PI 3.1415f
+#define PI 3.14159265359f
 namespace OpenGames::Oxel::Render
 {
 	class Camera3D

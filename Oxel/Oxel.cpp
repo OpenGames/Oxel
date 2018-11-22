@@ -7,6 +7,7 @@
 #include "Renderer.cpp"
 #include "Camera.cpp"
 #include "ShaderLoader.cpp"
+#include "Block.cpp"
 namespace OpenGames::Oxel
 {
 	class Oxel
@@ -51,6 +52,24 @@ namespace OpenGames::Oxel
 						break;
 					case GLFW_KEY_D:
 						camera.move(0.04f, 0);
+						break;
+					case GLFW_KEY_0:
+						//renderer.gameDModels[0]->addRotation(PI / 1280, 0, 0);
+						break;
+					case GLFW_KEY_9:
+						//renderer.gameDModels[0]->addRotation(-PI / 1280, 0, 0);
+						break;
+					case GLFW_KEY_UP:
+						//renderer.gameDModels[0]->addRotation(0, PI / 1280, 0);
+						break;
+					case GLFW_KEY_DOWN:
+						//renderer.gameDModels[0]->addRotation(0, -PI / 1280, 0);
+						break;
+					case GLFW_KEY_LEFT:
+						//renderer.gameDModels[0]->addRotation(0, 0, PI / 1280);
+						break;
+					case GLFW_KEY_RIGHT:
+						//renderer.gameDModels[0]->addRotation(0, 0, -PI / 1280);
 						break;
 					case GLFW_KEY_SPACE:
 						camera.position.y += 0.04f;
@@ -109,7 +128,13 @@ namespace OpenGames::Oxel
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
 			renderer.setCamera(&camera);
 
-			renderer.gameModels.pushBack(new Render::Models::Quad({ 0.0f,0.0f,0.0f }));
+			//Render::Models::Quad* q1 = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
+			//Render::Models::Quad* q2 = new Render::Models::Quad({ 1.0f,0.0f,0.0f });
+			//q2->addRotation(PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+			//renderer.gameModels.pushBack(q1);
+			//renderer.gameModels.pushBack(q2);
+			renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }));
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());

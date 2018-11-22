@@ -14,15 +14,15 @@ namespace OpenGames::Oxel::Render::Models
 
 			static const GLfloat vertices[20] = {
 				//Position
-				0.00f, 0.00f, 0.00f,
-				0.00f, 1.00f, 0.00f,
-				1.00f, 0.00f, 0.00f,
-				1.00f, 1.00f, 0.00f,
-				//UVs
-				 0.0f, 0.0f,
-				 0.0f, 1.0f,
-				 1.0f, 0.0f,
-				 1.0f, 1.0f
+				-0.50f, -0.50f, 0.00f,
+				-0.50f,  0.50f, 0.00f,
+				 0.50f, -0.50f, 0.00f,
+				 0.50f,  0.50f, 0.00f,
+				 //UVs
+				  0.0f, 0.0f,
+				  0.0f, 1.0f,
+				  1.0f, 0.0f,
+				  1.0f, 1.0f
 
 				 //14 --> 20
 			};

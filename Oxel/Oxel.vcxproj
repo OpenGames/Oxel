@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Model.cpp" />

@@ -12,6 +12,7 @@ namespace OpenGames::Oxel::Render
 		GLuint modelMatrixLocation, viewMatrixLocation, projectionMatrixLocation;
 		Render::Camera3D* camera;
 		Math::Array<Models::Model*> gameModels;
+		Math::Array<Models::DerivedModel*> gameDModels;
 		~Renderer()
 		{
 			for(size_t i = 0; i < gameModels.size(); ++i)
@@ -38,11 +39,21 @@ namespace OpenGames::Oxel::Render
 			{
 				glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, camera->getProjectionMatrixPointer());
 				glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, camera->getViewMatrixPointer());
-				glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, gameModels[i]->getModelMatrixPointer());
-
-				//std::cout << "LEL" << SomePosLoc;
+				glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameModels[i]->getModelMatrix()));
 
 				gameModels[i]->draw();
+			}
+			for (size_t i = 0; i < gameDModels.size(); ++i)
+			{
+				glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, camera->getProjectionMatrixPointer());
+				glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, camera->getViewMatrixPointer());
+				for (size_t j = 0; j < gameDModels[i]->size(); j++)
+				{
+					glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(gameDModels[i]->getModelMatrix(j)));
+
+					gameDModels[i]->draw(j);
+				}
+				
 			}
 		}
 	};

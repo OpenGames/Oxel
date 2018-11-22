@@ -25,6 +25,12 @@
     <Filter Include="Исходные файлы\Render\World">
       <UniqueIdentifier>{a2752c92-adf7-4e6a-977e-e6b696249d1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Render\Models\BasicModels">
+      <UniqueIdentifier>{b0223534-ec2f-4369-a450-5a78d8e77cca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Render\Models\Derives">
+      <UniqueIdentifier>{9327a54e-79cd-40b5-bf0e-297430fdca04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -33,20 +39,11 @@
     <ClCompile Include="Oxel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Исходные файлы\Render\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>Исходные файлы\Render\Models</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Исходные файлы\Render</Filter>
     </ClCompile>
     <ClCompile Include="ShaderLoader.cpp">
       <Filter>Исходные файлы\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Quad.cpp">
-      <Filter>Исходные файлы\Render\Models</Filter>
     </ClCompile>
     <ClCompile Include="Array.cpp">
       <Filter>Исходные файлы\Math</Filter>
@@ -56,6 +53,18 @@
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Исходные файлы\Render\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Исходные файлы\Render\Models\BasicModels</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Исходные файлы\Render\Models\BasicModels</Filter>
+    </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>Исходные файлы\Render\Models\BasicModels</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Исходные файлы\Render\Models\Derives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
