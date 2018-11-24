@@ -7,14 +7,19 @@ namespace OpenGames::Oxel::Game::GameWorld
 	{
 	private:
 		GLuint texture;
+		int chunkC = 0;
 	public:
 		WorldGenerator(GLuint Texture)
 		{
 			this->texture = Texture;
 		}
-		Chunk generateChunk()
+		WorldGenerator()
 		{
-			Chunk chunk({ 0.0, 0.0 }, texture);
+
+		}
+		Chunk generateChunk(float x, float z)
+		{
+			Chunk chunk({ x , z }, texture);
 
 			for (int y = 0; y < 10; y++)
 			{
@@ -26,8 +31,22 @@ namespace OpenGames::Oxel::Game::GameWorld
 					}
 				}
 			}
-
 			return chunk;
+		}
+		std::vector<Chunk> generateChunks(glm::vec3 playerPos, int chunkRadius)
+		{
+			std::vector<Chunk> res;
+			
+			float x = glm::floor(playerPos.x / 16);
+			float z = glm::floor(playerPos.z / 16);
+
+			for (int i = 0; i < chunkRadius * chunkRadius; i++)
+			{
+				res.push_back(generateChunk(((i % chunkRadius) - (chunkRadius/2))*16 + x * 16 , ((i / chunkRadius) - (chunkRadius / 2)) * 16 + z * 16));
+			}
+
+			return res;
+			res.clear();
 		}
 	};
 }

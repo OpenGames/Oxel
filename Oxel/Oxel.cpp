@@ -24,12 +24,12 @@ namespace OpenGames::Oxel
 		const float HALF_WIDTH = WIDTH / 2.0f, HALF_HEIGHT = HEIGHT / 2.0f;
 		bool keys[1024];
 
-		Game::GameWorld::Chunk chunk;
-
 		Render::Renderer renderer;
 		Render::Camera3D camera = Render::Camera3D(WIDTH, HEIGHT);
 
 		GLuint programId;
+
+		int multiplyer = 1;
 
 		void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
@@ -47,20 +47,22 @@ namespace OpenGames::Oxel
 						glfwSetWindowShouldClose(window, true);
 						break;
 					case GLFW_KEY_W:
-						camera.move(0, 0.04f);
+						camera.move(0, 0.04f * multiplyer);
 						break;
 					case GLFW_KEY_A:
-						camera.move(-0.04f, 0);
+						camera.move(-0.04f * multiplyer, 0);
 						break;
 					case GLFW_KEY_S:
-						camera.move(0, -0.04f);
+						camera.move(0, -0.04f * multiplyer);
 						break;
 					case GLFW_KEY_D:
-						camera.move(0.04f, 0);
+						camera.move(0.04f * multiplyer, 0);
 						break;
-					case GLFW_KEY_0:
+					case GLFW_KEY_DELETE:
+						renderer.gameDModels.clear();
 						break;
-					case GLFW_KEY_9:
+					case GLFW_KEY_INSERT:
+						UpdateChunks(3);
 						//renderer.gameDModels[0]->addRotation(-PI / 1280, 0, 0);
 						break;
 					case GLFW_KEY_UP:
@@ -76,13 +78,19 @@ namespace OpenGames::Oxel
 						//renderer.gameDModels[0]->addRotation(0, 0, -PI / 1280);
 						break;
 					case GLFW_KEY_SPACE:
-						camera.position.y += 0.04f;
+						camera.position.y += 0.04f * multiplyer;
 						break;
-					case 341:
-						camera.position.y -= 0.04f;
+					case GLFW_KEY_F12:
+						multiplyer = 10;
 						break;
-					case 340:
-						camera.position.y -= 0.04f;
+					case GLFW_KEY_F11:
+						multiplyer = 1;
+						break;
+					case 341: //ctrl
+						camera.position.y -= 0.04f * multiplyer;
+						break;
+					case 340: //shift
+						//multiplyer = 10;
 						break;
 					}
 				}
@@ -95,6 +103,8 @@ namespace OpenGames::Oxel
 			glfwSetCursorPos(window, HALF_WIDTH, HALF_HEIGHT);
 			camera.addRotation(deltaY / (HEIGHT / 2), deltaX / (WIDTH / 2));
 		}
+
+		Game::GameWorld::WorldGenerator generator;
 	public:
 		void init()
 		{
@@ -129,18 +139,26 @@ namespace OpenGames::Oxel
 			renderer.setCamera(&camera);
 
 			GLuint missing = ContentPipe::loadTexture("missing.png", GL_NEAREST);
+			generator = *new Game::GameWorld::WorldGenerator(missing);
 
-			Game::GameWorld::WorldGenerator generator(missing);
-			chunk = generator.generateChunk();
 
-			//Game::GameWorld::Chunk chunk = *new Game::GameWorld::Chunk({ 0.0f, 0.0f }, missing);
-
-			renderer.gameDModels.pushBack(chunk.buildChunkModel());
-
+			UpdateChunks(3);
 			//renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }, missing));
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
+		}
+		void UpdateChunks(int r)
+		{
+			renderer.gameDModels.clear();
+
+			std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(camera.position, r);
+			//Game::GameWorld::Chunk chunk = *new Game::GameWorld::Chunk({ 0.0f, 0.0f }, missing);
+			for (int i = 0; i < chunk.size(); i++)
+			{
+				renderer.gameDModels.push_back(chunk[i].buildChunkModel());
+			}
+			
 		}
 		void render()
 		{
@@ -155,7 +173,7 @@ namespace OpenGames::Oxel
 
 			double fps = 1.0 / (glfwGetTime() - time);
 			time = glfwGetTime();
-			glfwSetWindowTitle(window, (std::to_string(fps) + " lul").c_str());
+			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size())).c_str());
 		}
 		void update()
 		{

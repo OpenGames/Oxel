@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include "Array.cpp"
 #include "Model.cpp"
 #include "Camera.cpp"
@@ -12,7 +13,7 @@ namespace OpenGames::Oxel::Render
 		GLuint modelMatrixLocation, viewMatrixLocation, projectionMatrixLocation;
 		Render::Camera3D* camera;
 		Math::Array<Models::Model*> gameModels;
-		Math::Array<Models::DerivedModel*> gameDModels;
+		std::vector<Models::DerivedModel*> gameDModels;
 		~Renderer()
 		{
 			for(int i = 0; i < gameModels.size(); ++i)

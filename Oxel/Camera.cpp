@@ -24,18 +24,18 @@ namespace OpenGames::Oxel::Render
 		inline void addRotation(float yaw, float pitch)
 		{
 			angleFromX += pitch * PI * sensivity;
-			if(angleFromY + yaw * PI * sensivity < PI / 2 && angleFromY + yaw * PI * sensivity > -PI / 2)
+			if(angleFromY + yaw * PI * sensivity * 2 < PI / 2 && angleFromY + yaw * PI * sensivity * 2 > -PI / 2)
 				angleFromY += yaw * PI * sensivity;
-			float radiusFromY = cos(angleFromY);
-			orientation.x = cos(angleFromX) * radiusFromY;
-			orientation.z = sin(angleFromX) * radiusFromY;
-			orientation.y = sin(angleFromY);
+			orientation.x = glm::cos(angleFromX) * glm::cos(angleFromY);
+			orientation.z = glm::sin(angleFromX) * glm::cos(angleFromY);
+			orientation.y = glm::sin(angleFromY);
 
 		}
 		inline void move(float side, float straight)
 		{
-			position.x += straight * cos(angleFromX) + side * cos(angleFromX + PI / 2);
-			position.z += straight * sin(angleFromX) + side * sin(angleFromX + PI / 2);
+			position.x += straight * glm::cos(angleFromX) + side * glm::cos(angleFromX + PI / 2);
+			position.z += straight * glm::sin(angleFromX) + side * glm::sin(angleFromX + PI / 2);
+			//position.y += straight * glm::cos(angleFromY);
 		}
 		inline const GLfloat* getViewMatrixPointer()
 		{
