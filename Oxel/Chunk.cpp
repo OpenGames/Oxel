@@ -49,6 +49,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							continue;
 						#pragma region Y
 						if (y == 0) {
+							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y - 0.5, z + 0) + glm::vec3(pos.x, 0, pos.y));
 							face->setTexture(texture);
 							face->addRotation(PI / 2, 0.0f, 0.0f);
@@ -62,9 +63,11 @@ namespace OpenGames::Oxel::Game::GameWorld
 								face->setTexture(texture);
 								face->addRotation(PI / 2, 0.0f, 0.0f);
 								ChunkModel->addModel(face);
+								continue;
 							}
 						}
 						if (y == 255) {
+							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0.5, z + 0) + glm::vec3(pos.x, 0, pos.y));
 							face->setTexture(texture);
 							face->addRotation(PI / 2, 0.0f, 0.0f);
@@ -78,12 +81,14 @@ namespace OpenGames::Oxel::Game::GameWorld
 								face->setTexture(texture);
 								face->addRotation(PI / 2, 0.0f, 0.0f);
 								ChunkModel->addModel(face);
+								continue;
 							}
 						}
 						#pragma endregion
 						#pragma region Z
 						if (z == 0)
 						{
+							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z - 0.5) + glm::vec3(pos.x, 0, pos.y));
 							face->setTexture(texture);
 							ChunkModel->addModel(face);
@@ -95,10 +100,12 @@ namespace OpenGames::Oxel::Game::GameWorld
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z - 0.5) + glm::vec3(pos.x, 0, pos.y));
 								face->setTexture(texture);
 								ChunkModel->addModel(face);
+								continue;
 							}
 						}
 						if (z == 15)
 						{
+							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z + 0.5f) + glm::vec3(pos.x, 0, pos.y));
 							face->setTexture(texture);
 							ChunkModel->addModel(face);
@@ -110,12 +117,15 @@ namespace OpenGames::Oxel::Game::GameWorld
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z + 0.5) + glm::vec3(pos.x, 0, pos.y));
 								face->setTexture(texture);
 								ChunkModel->addModel(face);
+								continue;
 							}
 						}
 						#pragma endregion						
 						#pragma region X
 						if (x == 0)
 						{
+							continue;
+
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + -0.5, y + 0, z + 0) + glm::vec3(pos.x, 0, pos.y));
 							face->setTexture(texture);
 							face->addRotation(0.0f, 0.0f, PI / 2);
@@ -129,10 +139,14 @@ namespace OpenGames::Oxel::Game::GameWorld
 								face->setTexture(texture);
 								face->addRotation(0.0f, 0.0f, PI / 2);
 								ChunkModel->addModel(face);
+
+								continue;
 							}
 						}
 						if (x == 15)
 						{
+							continue;
+
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0.5f, y + 0, z + 0) + glm::vec3(pos.x, 0, pos.y));
 							face->setTexture(texture);
 							face->addRotation(0.0f, 0.0f, PI / 2);
@@ -146,6 +160,8 @@ namespace OpenGames::Oxel::Game::GameWorld
 								face->setTexture(texture);
 								face->addRotation(0.0f, 0.0f, PI / 2);
 								ChunkModel->addModel(face);
+
+								continue;
 							}
 						}
 						#pragma endregion

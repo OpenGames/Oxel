@@ -142,7 +142,7 @@ namespace OpenGames::Oxel
 			generator = *new Game::GameWorld::WorldGenerator(missing);
 
 
-			UpdateChunks(3);
+			UpdateChunks(7);
 			//renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }, missing));
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
