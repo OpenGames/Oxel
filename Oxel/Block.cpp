@@ -1,34 +1,60 @@
 #pragma once
-#include <vector>
-#include "Model.cpp"
-#include "Quad.cpp"
-namespace OpenGames::Oxel::Render::Models
+#include <iostream>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+#include <GL/glew.h>
+#include "ContentPipe.cpp"
+#include "Array.cpp"
+
+namespace OpenGames::Oxel::Game::GameObjects
 {
-	class Block : public DerivedModel
+	class Block
 	{
+	private:
+		int AtlasX;
+		int AtlasY;
+
+
+
+	protected:
+		int id;
+
 	public:
-		Block(glm::vec3 position, GLuint texture)// : Model(position)
+		float hardness;
+		float lightness;
+		bool gravityAffected;
+		bool collisionAffected;
+		bool isStackable;
+		int maxStack;
+
+		Block(int id = -1)
 		{
-			this->position = position;
-
-			this->addModel(new Render::Models::Quad((glm::vec3(-0.5f,  0.0f,  0.0f) + position)));
-			this->addModel(new Render::Models::Quad((glm::vec3( 0.5f,  0.0f,  0.0f) + position)));
-			this->addModel(new Render::Models::Quad((glm::vec3( 0.0f, -0.5f,  0.0f) + position)));
-			this->addModel(new Render::Models::Quad((glm::vec3( 0.0f,  0.5f,  0.0f) + position)));
-			this->addModel(new Render::Models::Quad((glm::vec3( 0.0f,  0.0f, -0.5f) + position)));
-			this->addModel(new Render::Models::Quad((glm::vec3( 0.0f,  0.0f,  0.5f) + position)));
-
-			models[0]->setTexture(texture);
-			models[1]->setTexture(texture);
-			models[2]->setTexture(texture);
-			models[3]->setTexture(texture);
-			models[4]->setTexture(texture);
-			models[5]->setTexture(texture);
-
-			models[0]->addRotation(0.0f, 0.0f, PI/2);
-			models[1]->addRotation(0.0f, 0.0f, PI/2);
-			models[2]->addRotation(PI/2, 0.0f, 0.0f);
-			models[3]->addRotation(PI/2, 0.0f, 0.0f);
+			this->id = id;
+		}
+		virtual long getID()
+		{
+			return id;
 		}
 	};
+	class BlockManager
+	{
+	public:
+		BlockManager()
+		{
+		}
+
+		Block GetBlock(int id)
+		{
+			return *blocks[id];
+		}
+
+	private:
+		Math::Array<Block*> blocks;
+	};
+
+	enum Blocks
+	{
+		MISSING = -1,
+		AIR
+	}; 
 }

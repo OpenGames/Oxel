@@ -22,21 +22,30 @@
     <Filter Include="Исходные файлы\Math">
       <UniqueIdentifier>{f321dfbf-7db7-412c-abfa-8ee8ee0ea4ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\Render\World">
-      <UniqueIdentifier>{a2752c92-adf7-4e6a-977e-e6b696249d1f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\Render\Models\BasicModels">
       <UniqueIdentifier>{b0223534-ec2f-4369-a450-5a78d8e77cca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\Render\Models\Derives">
       <UniqueIdentifier>{9327a54e-79cd-40b5-bf0e-297430fdca04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Game">
+      <UniqueIdentifier>{a2752c92-adf7-4e6a-977e-e6b696249d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Game\GameObjects">
+      <UniqueIdentifier>{9767895c-3c83-48ce-a1d7-067558564ce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Game\GameObjects\BasicObjects">
+      <UniqueIdentifier>{54f22acb-f5c2-446f-8cf2-7d1e1e04d4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Game\GameWorld">
+      <UniqueIdentifier>{49673037-b4cc-4695-8dc0-2a36b55643ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Render\Textures">
+      <UniqueIdentifier>{ed3c1d5b-2133-4e61-b824-d5599ae611b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Oxel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
@@ -51,9 +60,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Исходные файлы\Render</Filter>
     </ClCompile>
-    <ClCompile Include="Chunk.cpp">
-      <Filter>Исходные файлы\Render\World</Filter>
-    </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>Исходные файлы\Render\Models\BasicModels</Filter>
     </ClCompile>
@@ -63,11 +69,29 @@
     <ClCompile Include="Quad.cpp">
       <Filter>Исходные файлы\Render\Models\BasicModels</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Исходные файлы\Render\Models\Derives</Filter>
-    </ClCompile>
     <ClCompile Include="ContentPipe.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="DerivedList.cpp">
+      <Filter>Исходные файлы\Render\Models\Derives</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Исходные файлы\Game\GameObjects\BasicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Исходные файлы\Game\GameWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Исходные файлы\Game\GameObjects\BasicObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Oxel.cpp">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureAtlas.cpp">
+      <Filter>Исходные файлы\Render\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldGenerator.cpp">
+      <Filter>Исходные файлы\Game\GameWorld</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

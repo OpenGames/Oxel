@@ -5,6 +5,7 @@ using namespace OpenGames::Oxel;
 int main()
 {
 	Oxel oxel;
+
 	oxel.init();
 
 	const unsigned char* renderer = glGetString(GL_RENDERER);

@@ -72,7 +72,6 @@ namespace OpenGames::Oxel::Render::Models
 			addRotation(XZ, glm::vec3(0.0f, 1.0f, 0.0f)); //rising on XZ
 			addRotation(ang, model_orientation);
 		}
-
 		virtual const glm::mat4 getModelMatrix()
 		{	
 			

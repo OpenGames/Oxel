@@ -8,7 +8,9 @@
 #include "Renderer.cpp"
 #include "Camera.cpp"
 #include "ShaderLoader.cpp"
-#include "Block.cpp"
+#include "DerivedList.cpp"
+#include "WorldGenerator.cpp"
+
 namespace OpenGames::Oxel
 {
 	class Oxel
@@ -21,6 +23,8 @@ namespace OpenGames::Oxel
 	private:
 		const float HALF_WIDTH = WIDTH / 2.0f, HALF_HEIGHT = HEIGHT / 2.0f;
 		bool keys[1024];
+
+		Game::GameWorld::Chunk chunk;
 
 		Render::Renderer renderer;
 		Render::Camera3D camera = Render::Camera3D(WIDTH, HEIGHT);
@@ -55,7 +59,6 @@ namespace OpenGames::Oxel
 						camera.move(0.04f, 0);
 						break;
 					case GLFW_KEY_0:
-						//renderer.gameDModels[0]->addRotation(PI / 1280, 0, 0);
 						break;
 					case GLFW_KEY_9:
 						//renderer.gameDModels[0]->addRotation(-PI / 1280, 0, 0);
@@ -120,35 +123,19 @@ namespace OpenGames::Oxel
 
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			/*
-			glEnable(GL_CULL_FACE);
-			glCullFace(GL_FRONT);
-			*/
 			glEnable(GL_DEPTH_TEST);
 
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
 			renderer.setCamera(&camera);
 
-			//Render::Models::Quad* q1 = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
-			//Render::Models::Quad* q2 = new Render::Models::Quad({ 1.0f,0.0f,0.0f });
-			//q2->addRotation(PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-
-			//renderer.gameModels.pushBack(q1);
-			//renderer.gameModels.pushBack(q2);
-
 			GLuint missing = ContentPipe::loadTexture("missing.png", GL_NEAREST);
 
-			Math::Array<Render::Models::Block* > chunk;
-			for (float x = 0; x < 16; x++)
-			{
-				for (float y = 0; y < 16; y++)
-				{
-					for (float z = 0; z < 16; z++)
-					{
-						renderer.gameDModels.pushBack(new Render::Models::Block({ x,y,z }, missing));
-					}
-				}
-			}
+			Game::GameWorld::WorldGenerator generator(missing);
+			chunk = generator.generateChunk();
+
+			//Game::GameWorld::Chunk chunk = *new Game::GameWorld::Chunk({ 0.0f, 0.0f }, missing);
+
+			renderer.gameDModels.pushBack(chunk.buildChunkModel());
 
 			//renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }, missing));
 

@@ -42,7 +42,6 @@ namespace OpenGames::Oxel::Render::Models
 			this->vao = vao;
 			this->vbo.pushBack(vbo);
 		}
-
 		virtual void draw() override final
 		{
 			ContentPipe::bindTexture(texture, 0);

@@ -4,14 +4,14 @@ namespace OpenGames::Oxel::Math
 	template<typename T> class Array {
 	private:
 		T * array;
-		size_t capacity;
-		size_t count;
-		void increaseCapacity(size_t value)
+		int capacity;
+		int count;
+		void increaseCapacity(int value)
 		{
-			size_t newCapacity = count + value;
+			int newCapacity = count + value;
 			T* newArray = new T[newCapacity];
 
-			for(size_t i = 0; i < capacity; ++i)
+			for(int i = 0; i < capacity; ++i)
 			{
 				newArray[i] = array[i];
 			}
@@ -21,7 +21,7 @@ namespace OpenGames::Oxel::Math
 			array = newArray;
 		}
 	public:
-		Array(size_t capacity = 1) : capacity(capacity), count(0)
+		Array(int capacity = 1) : capacity(capacity), count(0)
 		{
 			array = new T[capacity];
 		}
@@ -29,7 +29,7 @@ namespace OpenGames::Oxel::Math
 		{
 			delete[] array;
 		}
-		inline size_t size() { return count; }
+		inline int size() { return count; }
 		void pushBack(T value)
 		{
 			if(count >= capacity) increaseCapacity(1);
@@ -41,7 +41,7 @@ namespace OpenGames::Oxel::Math
 			increaseCapacity(-1);
 			--count;
 		}
-		T& operator[](size_t index)
+		T& operator[](int index)
 		{
 			return array[index];
 		}

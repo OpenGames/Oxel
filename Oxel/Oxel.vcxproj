@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="DerivedList.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="ContentPipe.cpp" />
@@ -136,7 +137,10 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TextureAtlas.cpp" />
+    <ClCompile Include="Tool.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core.frag" />
