@@ -33,9 +33,9 @@ namespace OpenGames::Oxel::Render
 		}
 		inline void move(float side, float straight)
 		{
-			position.x += straight * glm::cos(angleFromX) + side * glm::cos(angleFromX + PI / 2);
-			position.z += straight * glm::sin(angleFromX) + side * glm::sin(angleFromX + PI / 2);
-			//position.y += straight * glm::cos(angleFromY);
+			position.x += straight * glm::cos(angleFromX) * glm::cos(angleFromY) + side * glm::cos(angleFromX + PI / 2);
+			position.z += straight * glm::sin(angleFromX) * glm::cos(angleFromY) + side * glm::sin(angleFromX + PI / 2);
+			position.y += straight * glm::sin(angleFromY);
 		}
 		inline const GLfloat* getViewMatrixPointer()
 		{
