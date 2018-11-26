@@ -138,7 +138,7 @@ namespace OpenGames::Oxel
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
 			renderer.setCamera(&camera);
 
-			GLuint missing = ContentPipe::loadTexture("missing.png", GL_NEAREST);
+			GLuint missing = ContentPipe::loadTexture("Contents/missing.png", GL_NEAREST);
 			generator = *new Game::GameWorld::WorldGenerator(missing);
 
 
