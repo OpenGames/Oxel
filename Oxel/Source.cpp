@@ -30,6 +30,6 @@ int main()
 	{
 		oxel.render();
 	}
-	updateThread.join();
-	return 0;
+	std::cout << "_,-=+=-,_,-=+=-,_,-=+=-,_,-=+=-,_,-=+=-,_,-=+=-,_,-=+=-,_,-=+=-,_" << std::endl;
+	std::exit(0);
 }

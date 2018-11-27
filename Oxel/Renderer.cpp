@@ -21,6 +21,10 @@ namespace OpenGames::Oxel::Render
 				delete gameModels[i];
 			}
 		}
+		GLuint getProgram()
+		{
+			return program;
+		}
 		void setCamera(Render::Camera3D *Camera)
 		{
 			camera = Camera;

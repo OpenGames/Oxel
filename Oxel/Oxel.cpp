@@ -27,9 +27,10 @@ namespace OpenGames::Oxel
 		Render::Renderer renderer;
 		Render::Camera3D camera = Render::Camera3D(WIDTH, HEIGHT);
 
-		GLuint programId;
+		GLuint posrx, posry;
 
 		int multiplyer = 1;
+		float rx = 1, ry = 1;
 
 		void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
@@ -62,20 +63,23 @@ namespace OpenGames::Oxel
 						renderer.gameDModels.clear();
 						break;
 					case GLFW_KEY_INSERT:
-						UpdateChunks(3);
+						UpdateChunks(1);
 						//renderer.gameDModels[0]->addRotation(-PI / 1280, 0, 0);
 						break;
 					case GLFW_KEY_UP:
-						//renderer.gameDModels[0]->addRotation(0, PI / 1280, 0);
+						ry += 0.04f;
 						break;
 					case GLFW_KEY_DOWN:
-						//renderer.gameDModels[0]->addRotation(0, -PI / 1280, 0);
+						ry -= 0.04f;
+						//glUniform1f(posry, ry);
 						break;
 					case GLFW_KEY_LEFT:
-						//renderer.gameDModels[0]->addRotation(0, 0, PI / 1280);
+						rx -= 0.04f;
+						//glUniform1f(posrx, rx);
 						break;
 					case GLFW_KEY_RIGHT:
-						//renderer.gameDModels[0]->addRotation(0, 0, -PI / 1280);
+						rx += 0.04f;
+						//glUniform1f(posrx, rx);
 						break;
 					case GLFW_KEY_SPACE:
 						camera.position.y += 0.04f * multiplyer;
@@ -136,19 +140,21 @@ namespace OpenGames::Oxel
 			glEnable(GL_DEPTH_TEST);
 
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
+			posrx = glGetUniformLocation(renderer.getProgram(), "rx");
+			posry = glGetUniformLocation(renderer.getProgram(), "ry");
 			renderer.setCamera(&camera);
 
-<<<<<<< HEAD
-			GLuint missing = ContentPipe::loadTexture("missing.png", GL_NEAREST);
-			ContentPipe::bindTexture(missing, 0);
-=======
 			GLuint missing = ContentPipe::loadTexture("Contents/missing.png", GL_NEAREST);
->>>>>>> 99fc8424bb7e5b6a099f19ddecca88ca9c895cda
+			ContentPipe::bindTexture(missing, 0);
 			generator = *new Game::GameWorld::WorldGenerator(missing);
 
 
-			UpdateChunks(7);
-			//renderer.gameDModels.pushBack(new Render::Models::Block({ 0.0f,0.0f,0.0f }, missing));
+			//UpdateChunks(1);
+			auto quad = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
+
+			quad->scale(1.0f, 2.0f, 1.0f);
+
+			renderer.gameModels.pushBack(quad);
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
@@ -158,32 +164,38 @@ namespace OpenGames::Oxel
 			renderer.gameDModels.clear();
 
 			std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(camera.position, r);
+
 			//Game::GameWorld::Chunk chunk = *new Game::GameWorld::Chunk({ 0.0f, 0.0f }, missing);
+
 			for (int i = 0; i < chunk.size(); i++)
 			{
 				renderer.gameDModels.push_back(chunk[i].buildChunkModel());
 			}
 			
 		}
+		double fps;
+		double time;
 		void render()
 		{
-			double time = glfwGetTime();
+			time = glfwGetTime();
 
 			glfwPollEvents();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glUniform1f(posrx, rx);
+			glUniform1f(posry, ry);
 			
 			renderer.render();
 
 			glfwSwapBuffers(window);
 
-			double fps = 1.0 / (glfwGetTime() - time);
+			fps = 1.0 / (glfwGetTime() - time);
 			time = glfwGetTime();
-			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size())).c_str());
 		}
 		void update()
 		{
 			keyHandler();
 			//glfwSetWindowTitle(window, "u r a faggot");
+			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size()) + " RX: " + std::to_string(rx)).c_str());
 			std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.angleFromX << "\t" << camera.angleFromY << std::endl;
 			//std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.orientation.x << "\t" << camera.orientation.y << "\t" << camera.orientation.z << "\t" << std::endl;
 		}

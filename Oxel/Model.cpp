@@ -22,6 +22,10 @@ namespace OpenGames::Oxel::Render::Models
 																	//probably need to make this a constant
 
 		float model_orientation_angle = 0.0f;
+
+		float model_scale_x = 1.0f;
+		float model_scale_y = 1.0f;
+		float model_scale_z = 1.0f;
 	public:
 		glm::vec3 position;
 		Model(glm::vec3 position) : position(position)
@@ -72,10 +76,15 @@ namespace OpenGames::Oxel::Render::Models
 			addRotation(XZ, glm::vec3(0.0f, 1.0f, 0.0f)); //rising on XZ
 			addRotation(ang, model_orientation);
 		}
+		virtual void scale(float x, float y, float z)
+		{
+			model_scale_x *= x;
+			model_scale_y *= y;
+			model_scale_z *= z;
+		}
 		virtual const glm::mat4 getModelMatrix()
-		{	
-			
-			auto Cmodel = model;
+		{		
+			//auto Cmodel = model;
 
 			/*std::cout << std::endl;
 			std::cout << "-------------------------" << std::endl;
@@ -88,6 +97,11 @@ namespace OpenGames::Oxel::Render::Models
 
 			auto rotation_matrix_model = glm::toMat4(model_orientation_quaternion);
 			auto translation_matrix_model = glm::translate(model, position);
+			auto scale_matrix_model = glm::mat4(1.0f);
+
+			scale_matrix_model[0][0] = model_scale_x;
+			scale_matrix_model[1][1] = model_scale_y;
+			scale_matrix_model[2][2] = model_scale_z;
 
 			/*std::cout << std::endl;
 			std::cout << "-------------------------" << std::endl;
@@ -101,7 +115,7 @@ namespace OpenGames::Oxel::Render::Models
 			//int c = 0;
 
 			//std::cin >> c;
-			return (translation_matrix_model * rotation_matrix_model);
+			return (translation_matrix_model * rotation_matrix_model * scale_matrix_model);
 		}
 
 		virtual inline GLuint getVao() { return vao; }

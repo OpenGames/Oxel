@@ -19,11 +19,12 @@ namespace OpenGames::Oxel::Render::Models
 				-0.50f,  0.50f, 0.00f,
 				 0.50f, -0.50f, 0.00f,
 				 0.50f,  0.50f, 0.00f,
+				 
 				 //UVs
-				  0.0f, 0.0f,
-				  0.0f, 1.0f,
-				  1.0f, 0.0f,
-				  1.0f, 1.0f
+				 0.0f, 1.0f,
+				 0.0f, 0.0f,
+				 1.0f, 1.0f,
+				 1.0f, 0.0f,
 
 				 //14 --> 20
 			};
@@ -49,5 +50,28 @@ namespace OpenGames::Oxel::Render::Models
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 			//ContentPipe::unbindTexture(0);
 		}
+	};
+	class GreedyQuad : public Model
+	{
+	public:
+		GreedyQuad(glm::vec3 position) : Model(position)
+		{
+			static const GLfloat vertices[20] = {
+				//Position
+				-0.50f, -0.50f, 0.00f,
+				-0.50f,  0.50f, 0.00f,
+				 0.50f, -0.50f, 0.00f,
+				 0.50f,  0.50f, 0.00f,
+
+				 //UVs
+				 0.0f, 1.0f,
+				 0.0f, 0.0f,
+				 1.0f, 1.0f,
+				 1.0f, 0.0f,
+
+				 //14 --> 20
+			};
+		}
+
 	};
 }
