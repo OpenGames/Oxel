@@ -51,7 +51,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						if (y == 0) {
 							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y - 0.5, z + 0) + glm::vec3(pos.x, 0, pos.y));
-							face->setTexture(texture);
+							//face->setTexture(texture);
 							face->addRotation(PI / 2, 0.0f, 0.0f);
 							ChunkModel->addModel(face);
 						}
@@ -60,7 +60,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							if (chunk[x][y - 1][z].getID() == GameObjects::Blocks::AIR)
 							{
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y - 0.5, z + 0) + glm::vec3(pos.x, 0, pos.y));
-								face->setTexture(texture);
+								//face->setTexture(texture);
 								face->addRotation(PI / 2, 0.0f, 0.0f);
 								ChunkModel->addModel(face);
 								continue;
@@ -69,7 +69,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						if (y == 255) {
 							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0.5, z + 0) + glm::vec3(pos.x, 0, pos.y));
-							face->setTexture(texture);
+							//face->setTexture(texture);
 							face->addRotation(PI / 2, 0.0f, 0.0f);
 							ChunkModel->addModel(face);
 						}
@@ -78,7 +78,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							if (chunk[x][y + 1][z].getID() == GameObjects::Blocks::AIR)
 							{
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0.5, z + 0) + glm::vec3(pos.x, 0, pos.y));
-								face->setTexture(texture);
+								//face->setTexture(texture);
 								face->addRotation(PI / 2, 0.0f, 0.0f);
 								ChunkModel->addModel(face);
 								continue;
@@ -90,7 +90,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						{
 							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z - 0.5) + glm::vec3(pos.x, 0, pos.y));
-							face->setTexture(texture);
+							//face->setTexture(texture);
 							ChunkModel->addModel(face);
 						}
 						else
@@ -98,7 +98,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							if (chunk[x][y][z - 1].getID() == GameObjects::Blocks::AIR)
 							{
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z - 0.5) + glm::vec3(pos.x, 0, pos.y));
-								face->setTexture(texture);
+								//face->setTexture(texture);
 								ChunkModel->addModel(face);
 								continue;
 							}
@@ -107,7 +107,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						{
 							continue;
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z + 0.5f) + glm::vec3(pos.x, 0, pos.y));
-							face->setTexture(texture);
+							//face->setTexture(texture);
 							ChunkModel->addModel(face);
 						}
 						else
@@ -115,7 +115,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							if (chunk[x][y][z + 1].getID() == GameObjects::Blocks::AIR)
 							{
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0, y + 0, z + 0.5) + glm::vec3(pos.x, 0, pos.y));
-								face->setTexture(texture);
+								//face->setTexture(texture);
 								ChunkModel->addModel(face);
 								continue;
 							}
@@ -127,7 +127,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							continue;
 
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + -0.5, y + 0, z + 0) + glm::vec3(pos.x, 0, pos.y));
-							face->setTexture(texture);
+							//face->setTexture(texture);
 							face->addRotation(0.0f, 0.0f, PI / 2);
 							ChunkModel->addModel(face);
 						}
@@ -136,7 +136,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							if (chunk[x - 1][y][z].getID() == GameObjects::Blocks::AIR)
 							{
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + -0.5f, y + 0, z + 0) + glm::vec3(pos.x, 0, pos.y));
-								face->setTexture(texture);
+								//face->setTexture(texture);
 								face->addRotation(0.0f, 0.0f, PI / 2);
 								ChunkModel->addModel(face);
 
@@ -148,7 +148,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							continue;
 
 							Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0.5f, y + 0, z + 0) + glm::vec3(pos.x, 0, pos.y));
-							face->setTexture(texture);
+							//face->setTexture(texture);
 							face->addRotation(0.0f, 0.0f, PI / 2);
 							ChunkModel->addModel(face);
 						}
@@ -157,7 +157,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							if (chunk[x + 1][y][z].getID() == GameObjects::Blocks::AIR)
 							{
 								Render::Models::Model* face = new Render::Models::Quad(glm::vec3(x + 0.5f, y + 0, z + 0) + glm::vec3(pos.x, 0, pos.y));
-								face->setTexture(texture);
+								//face->setTexture(texture);
 								face->addRotation(0.0f, 0.0f, PI / 2);
 								ChunkModel->addModel(face);
 

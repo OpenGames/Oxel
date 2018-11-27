@@ -44,10 +44,10 @@ namespace OpenGames::Oxel::Render::Models
 		}
 		virtual void draw() override final
 		{
-			ContentPipe::bindTexture(texture, 0);
+			//ContentPipe::bindTexture(texture, 0);
 			glBindVertexArray(vao);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-			ContentPipe::unbindTexture(0);
+			//ContentPipe::unbindTexture(0);
 		}
 	};
 }

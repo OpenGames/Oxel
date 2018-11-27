@@ -139,6 +139,7 @@ namespace OpenGames::Oxel
 			renderer.setCamera(&camera);
 
 			GLuint missing = ContentPipe::loadTexture("missing.png", GL_NEAREST);
+			ContentPipe::bindTexture(missing, 0);
 			generator = *new Game::GameWorld::WorldGenerator(missing);
 
 
