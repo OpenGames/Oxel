@@ -19,7 +19,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 
 		bool checkChLineZ(int x, int y, int z, int width, int blockID)				//		+-------> x
 		{							
-			if (x - width == 0) return false;																		//		|
+			if (x - width == 0) return false;										//		|
 			bool result = true;														//		|
 			for (int cw = x; cw > x - width; cw--)									//		|
 			{																		//		V y
@@ -62,9 +62,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 		bool checkChLineY(int x, int z, int y, int width, int blockID)				//		+-------> x
 		{																			//		|
 			bool result = true;														//		|
-			for (int cw = z; cw > z - width; cw--)									//		|
+			for (int cw = x; cw > x - width; cw--)									//		|
 			{																		//		V Z
-				result &= chunk[x][y][cw].getID() == blockID;
+				result &= chunk[cw][y][z].getID() == blockID;
 			}
 			return result;
 		}
@@ -714,6 +714,251 @@ namespace OpenGames::Oxel::Game::GameWorld
 						}
 					}
 
+				}
+			}
+			for (int y = 0; y < size; y++)
+			{
+				if (y == 0)
+				{
+					int x = 0;
+					int z = 0;
+
+					std::vector<std::vector<bool>> freeMask(size, std::vector<bool>(size, true));
+					while (z < size)
+					{
+						GameObjects::Block currentGreedingBlock = chunk[x][y][z];
+
+						if (freeMask[x][z] && currentGreedingBlock.getID() != GameObjects::AIR)
+						{
+
+							int cx = x;
+							int cz = z;
+
+							int cw = 0;
+							int ch = 0;
+
+							Render::Models::GreedyQuadBuilder builder({ x, y - 0.5, z }, 'y');
+							cw++; ch++;
+							freeMask[cx][cz] = false;
+
+							while (chunk[cx + 1][y][cz].getID() == currentGreedingBlock.getID() && freeMask[cx + 1][cz])
+							{
+								builder.addRight();
+								cx++; cw++;
+								freeMask[cx][cz] = false;
+
+								if (cx == (size - 1))
+									break;
+							}
+							if (cz + 1 < size)
+							{
+								while (checkChLineY(cx, cz + 1, y, cw, currentGreedingBlock.getID()) && checkMkLine(cx, cz + 1, cw, freeMask))
+								{
+									builder.addLine();
+									cz++; ch++;
+
+									for (int ci = cx; ci > cx - cw; ci--)
+									{
+										freeMask[ci][cz] = false;
+									}
+
+									if (cz == (size - 1))
+										break;
+								}
+							}
+							ChunkModel->addModel(builder.build());
+							x = cx;
+						}
+						else
+						{
+							x++;
+						}
+						if (x >= (size - 1)) {
+							x = 0;
+							z++;
+						}
+					}
+				}
+				else if(y == (size - 1))
+				{
+					int x = 0;
+					int z = 0;
+
+					std::vector<std::vector<bool>> freeMask(size, std::vector<bool>(size, true));
+					while (z < size)
+					{
+						GameObjects::Block currentGreedingBlock = chunk[x][y][z];
+
+						if (freeMask[x][z] && currentGreedingBlock.getID() != GameObjects::AIR)
+						{
+
+							int cx = x;
+							int cz = z;
+
+							int cw = 0;
+							int ch = 0;
+
+							Render::Models::GreedyQuadBuilder builder({ x, y + 0.5, z }, 'y');
+							cw++; ch++;
+							freeMask[cx][cz] = false;
+
+							while (chunk[cx + 1][y][cz].getID() == currentGreedingBlock.getID() && freeMask[cx + 1][cz])
+							{
+								builder.addRight();
+								cx++; cw++;
+								freeMask[cx][cz] = false;
+
+								if (cx == (size - 1))
+									break;
+							}
+							if (cz + 1 < size)
+							{
+								while (checkChLineY(cx, cz + 1, y, cw, currentGreedingBlock.getID()) && checkMkLine(cx, cz + 1, cw, freeMask))
+								{
+									builder.addLine();
+									cz++; ch++;
+
+									for (int ci = cx; ci > cx - cw; ci--)
+									{
+										freeMask[ci][cz] = false;
+									}
+
+									if (cz == (size - 1))
+										break;
+								}
+							}
+							ChunkModel->addModel(builder.build());
+							x = cx;
+						}
+						else
+						{
+							x++;
+						}
+						if (x >= (size - 1)) {
+							x = 0;
+							z++;
+						}
+					}
+				}
+				else
+				{
+				int x = 0;
+				int z = 0;
+
+				std::vector<std::vector<bool>> freeMask(size, std::vector<bool>(size, true));
+				while (z < size)
+				{
+					GameObjects::Block currentGreedingBlock = chunk[x][y][z];
+
+					if (chunk[x][y - 1][z].getID() == GameObjects::Blocks::AIR && freeMask[x][z] && currentGreedingBlock.getID() != GameObjects::AIR)
+					{
+
+						int cx = x;
+						int cz = z;
+
+						int cw = 0;
+						int ch = 0;
+
+						Render::Models::GreedyQuadBuilder builder({ x, y - 0.5, z }, 'y');
+						cw++; ch++;
+						freeMask[cx][cz] = false;
+
+						while (chunk[cx + 1][y - 1][cz].getID() == GameObjects::Blocks::AIR && chunk[cx + 1][y][cz].getID() == currentGreedingBlock.getID() && freeMask[cx + 1][cz])
+						{
+							builder.addRight();
+							cx++; cw++;
+							freeMask[cx][cz] = false;
+
+							if (cx == (size - 1))
+								break;
+						}
+						if (cz + 1 < size)
+						{
+							while (checkChLineY(cx, cz + 1, y - 1, cw, GameObjects::Blocks::AIR) && checkChLineY(cx, cz + 1, y, cw, currentGreedingBlock.getID()) && checkMkLine(cx, cz + 1, cw, freeMask))
+							{
+								builder.addLine();
+								cz++; ch++;
+
+								for (int ci = cx; ci > cx - cw; ci--)
+								{
+									freeMask[ci][cz] = false;
+								}
+
+								if (cz == (size - 1))
+									break;
+							}
+						}
+						ChunkModel->addModel(builder.build());
+						x = cx;
+					}
+					else
+					{
+						x++;
+					}
+					if (x >= (size - 1)) {
+						x = 0;
+						z++;
+					}
+				}
+
+				x = 0;
+				z = 0;
+
+				freeMask = std::vector<std::vector<bool>>(size, std::vector<bool>(size, true));
+				while (z < size)
+				{
+					GameObjects::Block currentGreedingBlock = chunk[x][y][z];
+
+					if (chunk[x][y + 1][z].getID() == GameObjects::Blocks::AIR && freeMask[x][z] && currentGreedingBlock.getID() != GameObjects::AIR)
+					{
+
+						int cx = x;
+						int cz = z;
+
+						int cw = 0;
+						int ch = 0;
+
+						Render::Models::GreedyQuadBuilder builder({ x, y + 0.5, z }, 'y');
+						cw++; ch++;
+						freeMask[cx][cz] = false;
+
+						while (chunk[cx + 1][y + 1][cz].getID() == GameObjects::Blocks::AIR && chunk[cx + 1][y][cz].getID() == currentGreedingBlock.getID() && freeMask[cx + 1][cz])
+						{
+							builder.addRight();
+							cx++; cw++;
+							freeMask[cx][cz] = false;
+
+							if (cx == (size - 1))
+								break;
+						}
+						if (cz + 1 < size)
+						{
+							while (checkChLineY(cx, cz + 1, y + 1, cw, GameObjects::Blocks::AIR) && checkChLineY(cx, cz + 1, y, cw, currentGreedingBlock.getID()) && checkMkLine(cx, cz + 1, cw, freeMask))
+							{
+								builder.addLine();
+								cz++; ch++;
+
+								for (int ci = cx; ci > cx - cw; ci--)
+								{
+									freeMask[ci][cz] = false;
+								}
+
+								if (cz == (size - 1))
+									break;
+							}
+						}
+						ChunkModel->addModel(builder.build());
+						x = cx;
+					}
+					else
+					{
+						x++;
+					}
+					if (x >= (size - 1)) {
+						x = 0;
+						z++;
+					}
+				}
 				}
 			}
 
