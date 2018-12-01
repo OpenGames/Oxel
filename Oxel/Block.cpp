@@ -14,8 +14,6 @@ namespace OpenGames::Oxel::Game::GameObjects
 		int AtlasX;
 		int AtlasY;
 
-
-
 	protected:
 		int id;
 

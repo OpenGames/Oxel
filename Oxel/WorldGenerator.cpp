@@ -21,20 +21,27 @@ namespace OpenGames::Oxel::Game::GameWorld
 		{
 			Chunk chunk({ x , z }, texture);
 
-			for (int y = 0; y < 10; y++)
+			for (int y = 0; y < 16; y++)
 			{
 				for (int x = 0; x < 16; x++)
 				{
 					for (int z = 0; z < 16; z++)
 					{
-						chunk.setBlock(x, y, z, *new Game::GameObjects::Block());
+						if (x == 8 && y == 8)
+						{
+
+						}
+						else 
+						{ 
+							chunk.setBlock(x, y, z, *new Game::GameObjects::Block()); 
+						}
 					}
 				}
 			}
 			return chunk;
 		}
 		std::vector<Chunk> generateChunks(glm::vec3 playerPos, int chunkRadius)
-		{
+		{ 
 			std::vector<Chunk> res;
 			
 			float x = glm::floor(playerPos.x / 16);

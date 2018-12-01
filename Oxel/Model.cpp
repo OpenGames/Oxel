@@ -28,15 +28,15 @@ namespace OpenGames::Oxel::Render::Models
 		float model_scale_z = 1.0f;
 	public:
 		glm::vec3 position;
-		Model(glm::vec3 position) : position(position)
+		Model(glm::vec3 position = glm::vec3(0,0,0)) : position(position)
 		{
 			model_orientation_quaternion = glm::angleAxis(glm::degrees(model_orientation_angle), model_orientation);
 		}
 		virtual ~Model()
 		{
-			glDeleteVertexArrays(1, &vao);
-			glDeleteBuffers((GLsizei)vbo.size(), &vbo[0]);
-			delete &vbo;
+			//glDeleteVertexArrays(1, &vao);
+			//glDeleteBuffers((GLsizei)vbo.size(), &vbo[0]);
+			//delete &vbo;
 		}
 		virtual void draw() {}
 
@@ -117,7 +117,6 @@ namespace OpenGames::Oxel::Render::Models
 			//std::cin >> c;
 			return (translation_matrix_model * rotation_matrix_model * scale_matrix_model);
 		}
-
 		virtual inline GLuint getVao() { return vao; }
 		virtual inline const Math::Array<GLuint>& getVbo() { return vbo; }
 	};

@@ -6,7 +6,7 @@ namespace OpenGames::Oxel::Render::Models
 	class Quad : public Model
 	{
 	public:
-		Quad(glm::vec3 position) : Model(position)
+		Quad(glm::vec3 position = glm::vec3(0, 0, 0)) : Model(position)
 		{
 			GLuint vao, vbo;
 
@@ -31,7 +31,7 @@ namespace OpenGames::Oxel::Render::Models
 
 			glGenBuffers(1, &vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 			glEnableVertexAttribArray(0);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
@@ -51,26 +51,63 @@ namespace OpenGames::Oxel::Render::Models
 			//ContentPipe::unbindTexture(0);
 		}
 	};
-	class GreedyQuad : public Model
+	class GreedyQuadBuilder
 	{
+	private:
+		Quad* returnableQuad;
+		char type;
+		int width;
+		int height;
 	public:
-		GreedyQuad(glm::vec3 position) : Model(position)
+		GreedyQuadBuilder(glm::vec3 position, char type)
 		{
-			static const GLfloat vertices[20] = {
-				//Position
-				-0.50f, -0.50f, 0.00f,
-				-0.50f,  0.50f, 0.00f,
-				 0.50f, -0.50f, 0.00f,
-				 0.50f,  0.50f, 0.00f,
+			returnableQuad = new Render::Models::Quad(position);
+			this->type = type;
+			if (type == 'z')
+			{
 
-				 //UVs
-				 0.0f, 1.0f,
-				 0.0f, 0.0f,
-				 1.0f, 1.0f,
-				 1.0f, 0.0f,
+			}
+			else if (type == 'x')
+			{
+				this->returnableQuad->addRotation(0.0f, 0.0f, PI / 2);
+			}
+			else if (type == 'y')
+			{
+				this->returnableQuad->addRotation(PI / 2, 0.0f, 0.0f);
+			}
 
-				 //14 --> 20
-			};
+			width = 1;
+			height = 1;
+		}
+		void addRight()
+		{
+			width++;
+		}
+		void addLine()
+		{
+			height++;
+		}
+		Quad* build()
+		{
+			
+			returnableQuad->scale(width, height, 1.0f);
+			if (type == 'z')
+			{
+				returnableQuad->position.x += (float)(width - 1) / 2;
+				returnableQuad->position.y += (float)(height - 1) / 2;
+			}
+			else if (type == 'x')
+			{
+				returnableQuad->position.z += (float)(width - 1) / 2;
+				returnableQuad->position.y += (float)(height - 1) / 2;
+			}
+			else if (type == 'y')
+			{
+				returnableQuad->position.x += (float)(width - 1) / 2;
+				returnableQuad->position.z += (float)(height - 1) / 2;
+			}
+
+			return returnableQuad;
 		}
 
 	};

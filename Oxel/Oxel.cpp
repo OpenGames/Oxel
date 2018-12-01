@@ -150,11 +150,12 @@ namespace OpenGames::Oxel
 
 
 			//UpdateChunks(1);
-			auto quad = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
+			//auto quad = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
+			//quad->scale(2.0f, 2.0f, 1.0f);
 
-			quad->scale(1.0f, 2.0f, 1.0f);
+			Game::GameWorld::Chunk chunk = generator.generateChunk(0, 0);
 
-			renderer.gameModels.pushBack(quad);
+			renderer.gameDModels.push_back(chunk.buildChunkModel());
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
@@ -169,7 +170,7 @@ namespace OpenGames::Oxel
 
 			for (int i = 0; i < chunk.size(); i++)
 			{
-				renderer.gameDModels.push_back(chunk[i].buildChunkModel());
+				//renderer.gameDModels.push_back(chunk[i].buildChunkModel());
 			}
 			
 		}
@@ -181,6 +182,7 @@ namespace OpenGames::Oxel
 
 			glfwPollEvents();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0.698f, 0.99f, 0.99f, 1.0f);
 			glUniform1f(posrx, rx);
 			glUniform1f(posry, ry);
 			
@@ -194,7 +196,6 @@ namespace OpenGames::Oxel
 		void update()
 		{
 			keyHandler();
-			//glfwSetWindowTitle(window, "u r a faggot");
 			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size()) + " RX: " + std::to_string(rx)).c_str());
 			std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.angleFromX << "\t" << camera.angleFromY << std::endl;
 			//std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.orientation.x << "\t" << camera.orientation.y << "\t" << camera.orientation.z << "\t" << std::endl;
