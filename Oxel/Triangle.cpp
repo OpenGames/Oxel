@@ -36,7 +36,7 @@ namespace OpenGames::Oxel::Render::Models
 			glBindVertexArray(0);
 
 			this->vao = vao;
-			this->vbo.pushBack(vbo);
+			this->vbo = vbo;
 		}
 		virtual void draw() override final
 		{

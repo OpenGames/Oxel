@@ -133,6 +133,7 @@
     <ClCompile Include="ContentPipe.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Oxel.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>

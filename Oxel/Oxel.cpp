@@ -10,6 +10,7 @@
 #include "ShaderLoader.cpp"
 #include "DerivedList.cpp"
 #include "WorldGenerator.cpp"
+#include "Player.cpp"
 
 namespace OpenGames::Oxel
 {
@@ -24,8 +25,12 @@ namespace OpenGames::Oxel
 		const float HALF_WIDTH = WIDTH / 2.0f, HALF_HEIGHT = HEIGHT / 2.0f;
 		bool keys[1024];
 
+		Game::Player player;
+
 		Render::Renderer renderer;
-		Render::Camera3D camera = Render::Camera3D(WIDTH, HEIGHT);
+		Render::Camera3D* camera;
+
+		Game::GameWorld::Chunk ZAWARUDO;
 
 		GLuint posrx, posry;
 
@@ -48,16 +53,16 @@ namespace OpenGames::Oxel
 						glfwSetWindowShouldClose(window, true);
 						break;
 					case GLFW_KEY_W:
-						camera.move(0, 0.04f * multiplyer);
+						player.move(0, 0.04f * multiplyer);
 						break;
 					case GLFW_KEY_A:
-						camera.move(-0.04f * multiplyer, 0);
+						player.move(-0.04f * multiplyer, 0);
 						break;
 					case GLFW_KEY_S:
-						camera.move(0, -0.04f * multiplyer);
+						player.move(0, -0.04f * multiplyer);
 						break;
 					case GLFW_KEY_D:
-						camera.move(0.04f * multiplyer, 0);
+						player.move(0.04f * multiplyer, 0);
 						break;
 					case GLFW_KEY_DELETE:
 						renderer.gameDModels.clear();
@@ -82,7 +87,7 @@ namespace OpenGames::Oxel
 						//glUniform1f(posrx, rx);
 						break;
 					case GLFW_KEY_SPACE:
-						camera.position.y += 0.04f * multiplyer;
+						player.jump();
 						break;
 					case GLFW_KEY_F12:
 						multiplyer = 10;
@@ -91,7 +96,7 @@ namespace OpenGames::Oxel
 						multiplyer = 1;
 						break;
 					case 341: //ctrl
-						camera.position.y -= 0.04f * multiplyer;
+						//camera.position.y -= 0.04f * multiplyer;
 						break;
 					case 340: //shift
 						//multiplyer = 10;
@@ -105,7 +110,7 @@ namespace OpenGames::Oxel
 			float deltaX = -(HALF_WIDTH - (float)xpos);
 			float deltaY = (HALF_HEIGHT - (float)ypos);
 			glfwSetCursorPos(window, HALF_WIDTH, HALF_HEIGHT);
-			camera.addRotation(deltaY / (HEIGHT / 2), deltaX / (WIDTH / 2));
+			player.Look(deltaY / (HEIGHT / 2), deltaX / (WIDTH / 2));
 		}
 
 		Game::GameWorld::WorldGenerator generator;
@@ -139,10 +144,13 @@ namespace OpenGames::Oxel
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glEnable(GL_DEPTH_TEST);
 
+			player = *new Game::Player({ 0.0f, 20.0f, 0.0f });
+			player.setScreen(WIDTH, HEIGHT);
+
 			renderer.setShaderProgram(Render::ShaderLoader::createProgram(Render::ShaderLoader::compileShader(GL_VERTEX_SHADER, "Core.vert"), Render::ShaderLoader::compileShader(GL_FRAGMENT_SHADER, "Core.frag")));
 			posrx = glGetUniformLocation(renderer.getProgram(), "rx");
 			posry = glGetUniformLocation(renderer.getProgram(), "ry");
-			renderer.setCamera(&camera);
+			renderer.setCamera(player.getCameraInstance());
 
 			GLuint missing = ContentPipe::loadTexture("Contents/missing.png", GL_NEAREST);
 			ContentPipe::bindTexture(missing, 0);
@@ -153,18 +161,18 @@ namespace OpenGames::Oxel
 			//auto quad = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
 			//quad->scale(2.0f, 2.0f, 1.0f);
 
-			Game::GameWorld::Chunk chunk = generator.generateChunk(0, 0);
+			ZAWARUDO = generator.generateChunk(0, 0);
 
-			renderer.gameDModels.push_back(chunk.buildChunkModel());
+			renderer.gameDModels.push_back(ZAWARUDO.buildChunkModel());
 
-			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, camera.getProjectionMatrixPointer());
-			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, camera.getViewMatrixPointer());
+			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, player.getProjectionMatrixPointer());
+			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, player.getViewMatrixPointer());
 		}
 		void UpdateChunks(int r)
 		{
 			renderer.gameDModels.clear();
 
-			std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(camera.position, r);
+			std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(player.getPosition(), r);
 
 			//Game::GameWorld::Chunk chunk = *new Game::GameWorld::Chunk({ 0.0f, 0.0f }, missing);
 
@@ -195,9 +203,11 @@ namespace OpenGames::Oxel
 		}
 		void update()
 		{
+			//this->player.setGroundState(fa);
+			this->player.update(TICK_RATE);
 			keyHandler();
 			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size()) + " RX: " + std::to_string(rx)).c_str());
-			std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.angleFromX << "\t" << camera.angleFromY << std::endl;
+			std::cout << player.getPosition().x << "\t" << player.getPosition().y << "\t" << player.getPosition().z << "\t" << player.getCameraInstance()->angleFromX << "\t" << player.getCameraInstance()->angleFromY << std::endl;
 			//std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.orientation.x << "\t" << camera.orientation.y << "\t" << camera.orientation.z << "\t" << std::endl;
 		}
 		inline int windowShouldClose() { return glfwWindowShouldClose(window); }

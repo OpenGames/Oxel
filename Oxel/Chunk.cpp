@@ -14,7 +14,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 		glm::vec2 pos;
 		GLuint texture;
 
-		const int size = 16;
+		int size = 16;
 
 
 		bool checkChLineZ(int x, int y, int z, int width, int blockID)				//		+-------> x
@@ -85,7 +85,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 			
 		}
 	public:
-		Chunk(glm::vec2 pos, GLuint texture)
+		Chunk(glm::vec2 pos = glm::vec2(0,0))
 		{
 			std::vector<std::vector<std::vector<GameObjects::Block>>> initedChunk(size,
 				std::vector<std::vector<GameObjects::Block>>(size,
@@ -93,7 +93,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						*new GameObjects::Block(0))));
 
 			this->pos = pos;
-			this->texture = texture;
+			//this->texture = texture;
 
 			chunk = initedChunk;
 		}
@@ -282,7 +282,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 								if (cy == (size - 1))
 									break;
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							x = cx;
 						}
 						else

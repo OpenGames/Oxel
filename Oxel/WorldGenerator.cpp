@@ -8,18 +8,19 @@ namespace OpenGames::Oxel::Game::GameWorld
 	private:
 		GLuint texture;
 		int chunkC = 0;
+
 	public:
+
 		WorldGenerator(GLuint Texture)
 		{
 			this->texture = Texture;
 		}
 		WorldGenerator()
 		{
-
 		}
-		Chunk generateChunk(float x, float z)
+		static Chunk generateChunk(float x, float z)
 		{
-			Chunk chunk({ x , z }, texture);
+			Chunk chunk({ x , z });
 
 			for (int y = 0; y < 16; y++)
 			{

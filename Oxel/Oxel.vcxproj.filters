@@ -93,6 +93,12 @@
     <ClCompile Include="WorldGenerator.cpp">
       <Filter>Исходные файлы\Game\GameWorld</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Исходные файлы\Game\GameWorld</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core.frag">

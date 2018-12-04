@@ -14,7 +14,7 @@ namespace OpenGames::Oxel::Render::Models
 	protected:
 		GLuint vao;
 		GLuint texture;
-		Math::Array<GLuint> vbo;
+		GLuint vbo;
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::quat model_orientation_quaternion;
 		glm::vec3 model_orientation = glm::vec3(1.0f, 0.0f, 0.0f);	//a point (direction) the model is looking at
@@ -39,6 +39,7 @@ namespace OpenGames::Oxel::Render::Models
 			//delete &vbo;
 		}
 		virtual void draw() {}
+		virtual void setUvRepeat(float x, float y) {}
 
 		void setTexture(GLuint texture)
 		{

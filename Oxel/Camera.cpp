@@ -11,13 +11,15 @@ namespace OpenGames::Oxel::Render
 		float aspectRatio;
 	public:
 		glm::vec3 position = glm::vec3(0.0f, 0.0f, -2.0f);// -0.418867
-		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 orientation = glm::vec3(1.0f, 0.0f, 0.0f);
 		float angleFromX = 7.86158f;
 		float angleFromY = .0f;
 		float sensivity = 1.0f;
 		float fov = 90.0f;
 
 		Camera3D(uint16_t width, uint16_t height) : aspectRatio((float)width / height) {}
+		Camera3D(float ar) : aspectRatio(ar) {}
+		Camera3D() {}
 
 		//yaw: up/down
 		//pitch: left/right
@@ -31,11 +33,17 @@ namespace OpenGames::Oxel::Render
 			orientation.y = glm::sin(angleFromY);
 
 		}
-		inline void move(float side, float straight)
+		inline void setPosition(glm::vec3 position)
 		{
-			position.x += straight * glm::cos(angleFromX) * glm::cos(angleFromY) + side * glm::cos(angleFromX + PI / 2);
-			position.z += straight * glm::sin(angleFromX) * glm::cos(angleFromY) + side * glm::sin(angleFromX + PI / 2);
-			position.y += straight * glm::sin(angleFromY);
+			this->position = position;
+		}
+		inline void setOrientation(glm::vec3 orientation)
+		{
+			this->orientation = orientation;
+		}
+		inline void setFov(float fov)
+		{
+			this->fov = fov;
 		}
 		inline const GLfloat* getViewMatrixPointer()
 		{
@@ -43,7 +51,7 @@ namespace OpenGames::Oxel::Render
 		}
 		inline const GLfloat* getProjectionMatrixPointer()
 		{
-			return glm::value_ptr(glm::perspective(glm::radians(fov), 640.0f / 480, 0.0001f, 1000.0f));
+			return glm::value_ptr(glm::perspective(glm::radians(fov), aspectRatio, 0.0001f, 1000.0f));
 		}
 	};
 }
