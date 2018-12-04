@@ -105,10 +105,22 @@ namespace OpenGames::Oxel::Game::GameWorld
 		{
 			return chunk[x][y][z];
 		}
+		bool isUBlockSolid(int x, int y, int z)
+		{
+			if (y < 0)
+				return false;
+			else if (y >= size)
+				return false;
+			else
+				return chunk[x][y - 1][z].getID() != GameObjects::Blocks::AIR;
+		}
+
+
+
 		Render::Models::DerivedModel* buildChunkModel()
 		{
 			Render::Models::DerivedModel* ChunkModel = new Render::Models::DerivedModel();
-
+			glm::vec3 pos(this->pos.x, 0, this->pos.y);
 			//for (int y = 0; y < size; y++)
 			//{
 			//	for (int x = 0; x < size; x++)
@@ -234,7 +246,8 @@ namespace OpenGames::Oxel::Game::GameWorld
 			//		}
 			//	}
 			//}
-
+			
+			
 			for (int z = 0; z < size; z++) //checking for Z planes
 			{
 				if (z == 0)
@@ -256,7 +269,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x, y, z - 0.5 }, 'z');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y, z - 0.5) + pos, 'z');
 							cw++; ch++;
 							freeMask[cx][cy] = false;
 
@@ -316,7 +329,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x, y, z + 0.5 }, 'z');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y, z + 0.5) + pos, 'z');
 							cw++; ch++;
 							freeMask[cx][cy] = false;
 
@@ -342,7 +355,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 								if (cy == (size - 1))
 									break;
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							x = cx;
 						}
 						else
@@ -374,7 +389,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x, y, z - 0.5 }, 'z');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y, z - 0.5) + pos, 'z');
 							cw++; ch++;
 							freeMask[cx][cy] = false;
 
@@ -403,7 +418,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							x = cx;
 						}
 						else
@@ -433,7 +450,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x, y, z + 0.5 }, 'z');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y, z + 0.5) + pos, 'z');
 							cw++; ch++;
 							freeMask[cx][cy] = false;
 
@@ -462,7 +479,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							x = cx;
 						}
 						else
@@ -497,7 +516,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x - 0.5, y, z }, 'x');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x - 0.5, y, z) + pos, 'x');
 							cw++; ch++;
 							freeMask[cz][cy] = false;
 
@@ -526,7 +545,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							z = cz;
 						}
 						else
@@ -558,7 +579,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x + 0.5, y, z }, 'x');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x + 0.5, y, z) + pos, 'x');
 							cw++; ch++;
 							freeMask[cz][cy] = false;
 
@@ -584,7 +605,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 								if (cy == (size - 1))
 									break;
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							z = cz;
 						}
 						else
@@ -615,7 +638,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x - 0.5, y, z }, 'x');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x - 0.5, y, z) + pos, 'x');
 							cw++; ch++;
 							freeMask[cz][cy] = false;
 
@@ -644,7 +667,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							z = cz;
 						}
 						else
@@ -674,7 +699,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x + 0.5, y, z }, 'x');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x + 0.5, y, z) + pos, 'x');
 							cw++; ch++;
 							freeMask[cz][cy] = false;
 
@@ -703,7 +728,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							z = cz;
 						}
 						else
@@ -739,7 +766,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x, y - 0.5, z }, 'y');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y - 0.5, z) + pos, 'y');
 							cw++; ch++;
 							freeMask[cx][cz] = false;
 
@@ -768,7 +795,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							x = cx;
 						}
 						else
@@ -800,7 +829,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 							int cw = 0;
 							int ch = 0;
 
-							Render::Models::GreedyQuadBuilder builder({ x, y + 0.5, z }, 'y');
+							Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y + 0.5, z) + pos, 'y');
 							cw++; ch++;
 							freeMask[cx][cz] = false;
 
@@ -829,7 +858,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 										break;
 								}
 							}
-							ChunkModel->addModel(builder.build());
+							auto model = builder.build();
+							model->setUvRepeat(cw, ch);
+							ChunkModel->addModel(model);
 							x = cx;
 						}
 						else
@@ -861,7 +892,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						int cw = 0;
 						int ch = 0;
 
-						Render::Models::GreedyQuadBuilder builder({ x, y - 0.5, z }, 'y');
+						Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y - 0.5, z) + pos, 'y');
 						cw++; ch++;
 						freeMask[cx][cz] = false;
 
@@ -890,7 +921,9 @@ namespace OpenGames::Oxel::Game::GameWorld
 									break;
 							}
 						}
-						ChunkModel->addModel(builder.build());
+						auto model = builder.build();
+						model->setUvRepeat(cw, ch);
+						ChunkModel->addModel(model);
 						x = cx;
 					}
 					else
@@ -920,7 +953,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 						int cw = 0;
 						int ch = 0;
 
-						Render::Models::GreedyQuadBuilder builder({ x, y + 0.5, z }, 'y');
+						Render::Models::GreedyQuadBuilder builder(glm::vec3(x, y + 0.5, z) + pos, 'y');
 						cw++; ch++;
 						freeMask[cx][cz] = false;
 
@@ -949,7 +982,10 @@ namespace OpenGames::Oxel::Game::GameWorld
 									break;
 							}
 						}
-						ChunkModel->addModel(builder.build());
+						auto model = builder.build();
+						model->setUvRepeat(cw, ch);
+						ChunkModel->addModel(model);
+						//ChunkModel->addModel(builder.build());
 						x = cx;
 					}
 					else

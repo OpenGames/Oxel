@@ -95,6 +95,9 @@ namespace OpenGames::Oxel
 					case GLFW_KEY_F11:
 						multiplyer = 1;
 						break;
+					case GLFW_KEY_F10:
+						player.changeCreative();
+						break;
 					case 341: //ctrl
 						//camera.position.y -= 0.04f * multiplyer;
 						break;
@@ -207,7 +210,7 @@ namespace OpenGames::Oxel
 			this->player.update(TICK_RATE);
 			keyHandler();
 			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size()) + " RX: " + std::to_string(rx)).c_str());
-			std::cout << player.getPosition().x << "\t" << player.getPosition().y << "\t" << player.getPosition().z << "\t" << player.getCameraInstance()->angleFromX << "\t" << player.getCameraInstance()->angleFromY << std::endl;
+			std::cout << player.getPosition().x << "    \t" << player.getPosition().y << "    \t" << player.getPosition().z << "    \t" << player.getCameraInstance()->angleFromX << "    \t" << player.getCameraInstance()->angleFromY << std::endl;
 			//std::cout << camera.position.x << "\t" << camera.position.y << "\t" << camera.position.z << "\t" << camera.orientation.x << "\t" << camera.orientation.y << "\t" << camera.orientation.z << "\t" << std::endl;
 		}
 		inline int windowShouldClose() { return glfwWindowShouldClose(window); }
