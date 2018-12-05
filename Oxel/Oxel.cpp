@@ -166,7 +166,11 @@ namespace OpenGames::Oxel
 
 			ZAWARUDO = generator.generateChunk(0, 0);
 
-			renderer.gameDModels.push_back(ZAWARUDO.buildChunkModel());
+			double time = glfwGetTime();
+			auto chunkModel = ZAWARUDO.buildChunkModel();
+			printf("\n~~~~~\nchunk build elapsed: %fms\n~~~~~\n", glfwGetTime() - time);
+
+			renderer.gameDModels.push_back(chunkModel);
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, player.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, player.getViewMatrixPointer());
