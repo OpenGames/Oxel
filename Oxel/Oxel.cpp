@@ -181,12 +181,13 @@ namespace OpenGames::Oxel
 
 			std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(player.getPosition(), r);
 
-			//Game::GameWorld::Chunk chunk = *new Game::GameWorld::Chunk({ 0.0f, 0.0f }, missing);
+			ZAWARUDO = generator.generateChunk(0, 0);
 
-			for (int i = 0; i < chunk.size(); i++)
-			{
-				//renderer.gameDModels.push_back(chunk[i].buildChunkModel());
-			}
+			double time = glfwGetTime();
+			auto chunkModel = ZAWARUDO.buildChunkModel();
+			printf("\n~~~~~\nchunk build elapsed: %fms\n~~~~~\n", glfwGetTime() - time);
+
+			renderer.gameDModels.push_back(chunkModel);
 			
 		}
 		double fps;
