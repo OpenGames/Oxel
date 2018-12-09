@@ -19,7 +19,7 @@ namespace OpenGames::Oxel::Game::GameWorld
 		}
 		static Chunk generateChunk(float x, float z)
 		{
-			Chunk chunk({ x - 8 , z - 8 });
+			Chunk chunk({ x , z });
 
 			for (int y = 0; y < 16; y++)
 			{

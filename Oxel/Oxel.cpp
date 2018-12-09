@@ -9,8 +9,8 @@
 #include "Camera.cpp"
 #include "ShaderLoader.cpp"
 #include "DerivedList.cpp"
-#include "WorldGenerator.cpp"
 #include "Player.cpp"
+#include "World.cpp"
 
 namespace OpenGames::Oxel
 {
@@ -30,7 +30,8 @@ namespace OpenGames::Oxel
 		Render::Renderer renderer;
 		Render::Camera3D* camera;
 
-		Game::GameWorld::Chunk ZAWARUDO;
+		Game::GameWorld::Chunk Chunk;
+		Game::GameWorld::World ZAWARUDO;
 
 		GLuint posrx, posry;
 
@@ -157,37 +158,43 @@ namespace OpenGames::Oxel
 
 			GLuint missing = ContentPipe::loadTexture("Contents/missing.png", GL_NEAREST);
 			ContentPipe::bindTexture(missing, 0);
-			generator = *new Game::GameWorld::WorldGenerator(missing);
-
+			ZAWARUDO = *new Game::GameWorld::World(missing);
+			ZAWARUDO.generate(player.getPosition());
 
 			//UpdateChunks(1);
 			//auto quad = new Render::Models::Quad({ 0.0f,0.0f,0.0f });
 			//quad->scale(2.0f, 2.0f, 1.0f);
 
-			ZAWARUDO = generator.generateChunk(0, 0);
+			
 
 			double time = glfwGetTime();
-			auto chunkModel = ZAWARUDO.buildChunkModel();
-			printf("\n~~~~~\nchunk build elapsed: %fms\n~~~~~\n", glfwGetTime() - time);
 
-			renderer.gameDModels.push_back(chunkModel);
+			auto chunkModels = ZAWARUDO.getChunksToRender(player.getPosition(), 4);
+			printf("\n~~~~~\nchunk build elapsed: %fms\n~~~~~\n", glfwGetTime() - time);
+			printf("chunkModels size: %i", chunkModels.size());
+			for (Render::Models::DerivedModel* chunkModel : chunkModels)
+			{
+				
+				renderer.gameDModels.push_back(chunkModel);
+			}
+			
 
 			glUniformMatrix4fv(renderer.projectionMatrixLocation, 1, GL_FALSE, player.getProjectionMatrixPointer());
 			glUniformMatrix4fv(renderer.viewMatrixLocation, 1, GL_FALSE, player.getViewMatrixPointer());
 		}
 		void UpdateChunks(int r)
 		{
-			renderer.gameDModels.clear();
+			//renderer.gameDModels.clear();
 
-			std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(player.getPosition(), r);
+			//std::vector<Game::GameWorld::Chunk> chunk = generator.generateChunks(player.getPosition(), r);
 
-			ZAWARUDO = generator.generateChunk(0, 0);
+			//ZAWARUDO = generator.generateChunk(0, 0);
 
-			double time = glfwGetTime();
-			auto chunkModel = ZAWARUDO.buildChunkModel();
-			printf("\n~~~~~\nchunk build elapsed: %fms\n~~~~~\n", glfwGetTime() - time);
+			//double time = glfwGetTime();
+			//auto chunkModel = ZAWARUDO.buildChunkModel();
+			//printf("\n~~~~~\nchunk build elapsed: %fms\n~~~~~\n", glfwGetTime() - time);
 
-			renderer.gameDModels.push_back(chunkModel);
+			//renderer.gameDModels.push_back(chunkModel);
 			
 		}
 		double fps;
@@ -213,6 +220,7 @@ namespace OpenGames::Oxel
 		{
 			//this->player.setGroundState(fa);
 			this->player.update(TICK_RATE);
+			
 			keyHandler();
 			glfwSetWindowTitle(window, ("FPS: " + std::to_string(fps) + " CK: " + std::to_string(renderer.gameDModels.size()) + " RX: " + std::to_string(rx)).c_str());
 			std::cout << player.getPosition().x << "    \t" << player.getPosition().y << "    \t" << player.getPosition().z << "    \t" << player.getCameraInstance()->angleFromX << "    \t" << player.getCameraInstance()->angleFromY << std::endl;
