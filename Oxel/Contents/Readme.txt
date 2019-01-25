@@ -1,2 +1,2 @@
-This folder is gonna be used to contain temporary textures/resources/atlases/etc.
-(also, GitHub do not allow creating in itself a empty folder, so i have to create this readme)
+This folder contains temporary textures/resources/atlases/etc.
+(also GitHub didn't allow me to create an empty folder, so I made this readme)
